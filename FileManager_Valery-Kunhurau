@@ -1,0 +1,33 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+echo "Error: you did not specify a directory as a parameter."
+echo "Usage: $0 <path_to_directory>"
+exit 1
+fi
+
+if [ ! -d "$1" ]; then
+echo "Error: the specified directory '$1' does not exist."
+exit 1
+fi
+
+if [ ! -w "$1" ]; then
+echo "Error: you do not have write permissions to the '$1' directory."
+exit 1
+fi
+
+cd "$1"
+mkdir -p ValKun
+cd ValKun
+touch numbers.txt
+
+shuf -i 1-100 -n 5 > "numbers.txt"
+
+cat numbers.txt
+echo "file with the generated numbers:"
+sort -n numbers.txt >> sort_numbers.txt
+echo "file sorted by ascending order:"
+cat sort_numbers.txt
+sort -n -r numbers.txt >> resort_numbers.txt
+echo "down-sorted file:"
+cat resort_numbers.txt
